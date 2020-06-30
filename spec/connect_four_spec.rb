@@ -4,7 +4,8 @@ describe ConnectFour do
   it "initializes a 7x7 array of 'E'"do
     connect_four = ConnectFour.new
     test_grid = connect_four.grid.flatten.uniq
-    expect(test_grid.length ==1 && test_grid[0] == 'E').to eql(true)
+    puts test_grid
+    expect(test_grid.length == 1 && test_grid[0] == 'E').to eql(true)
   end
 
   describe '#column_available?' do 
@@ -39,12 +40,31 @@ describe ConnectFour do
       it "recognizes a vertical win" do 
         connect_four = ConnectFour.new
         4.times {(connect_four.place_piece('R', 0))}
-        expect(connect_four.is_win?).to eql true
+        expect(connect_four.is_win?).to eql(true)
       end
 
       it "recognizes a positive slope win" do 
         connect_four = ConnectFour.new
+        connect_four.place_piece('R',0)
+        connect_four.place_piece('B',1)
+        connect_four.place_piece('R',1)
+        2.times {connect_four.place_piece('B',2)}
+        connect_four.place_piece('R',2)
+        3.times {connect_four.place_piece('B',3)}
+        connect_four.place_piece('R',3)
+        expect(connect_four.is_win?).to eql(true)
+      end
 
+      it "recognizes a negative slope win" do
+        connect_four = ConnectFour.new
+        connect_four.place_piece('R',3)
+        connect_four.place_piece('B',2)
+        connect_four.place_piece('R',2)
+        2.times {connect_four.place_piece('B',1)}
+        connect_four.place_piece('R',1)
+        3.times {connect_four.place_piece('B',0)}
+        connect_four.place_piece('R',0)
+        expect(connect_four.is_win?).to eql(true)
       end
     end
   end

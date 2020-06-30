@@ -4,14 +4,13 @@ describe ConnectFour do
   it "initializes a 7x7 array of 'E'"do
     connect_four = ConnectFour.new
     test_grid = connect_four.grid.flatten.uniq
-    puts test_grid
     expect(test_grid.length == 1 && test_grid[0] == 'E').to eql(true)
   end
 
   describe '#column_available?' do 
     it "returns false when the column is full" do 
       connect_four = ConnectFour.new
-      7.times {connect_four.place_piece('R', 0)}
+      7.times {connect_four.place_piece(0, "R")}
       expect(connect_four.column_available?(0)).to eql(false)
     end
   end

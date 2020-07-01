@@ -18,52 +18,56 @@ describe ConnectFour do
   describe '#place_piece' do 
     it "places a correct colour piece in the correct spot" do 
       connect_four = ConnectFour.new
-      connect_four.place_piece('R', 0)
+      connect_four.place_piece(0, "R")
       expect(connect_four.output_space(0,0)).to eql('R')
     end
     it "returns false if the column is full" do
       connect_four = ConnectFour.new
-      7.times {connect_four.place_piece('R', 0)}
-      expect(connect_four.place_piece('R', 0)).to eql(false)
+      7.times {connect_four.place_piece(0, "R")}
+      expect(connect_four.place_piece(0, "R")).to eql(false)
     end
 
     describe '#get_winner' do 
       it "recognizes a horizontal win" do
         connect_four = ConnectFour.new
         for i in 0..4 do 
-          connect_four.place_piece('R', i)
+          connect_four.place_piece(i, "R")
         end
-        expect(connect_four.is_win?).to eql(true)
+        expect(connect_four.is_win?).to eql("R")
       end
 
       it "recognizes a vertical win" do 
         connect_four = ConnectFour.new
-        4.times {(connect_four.place_piece('R', 0))}
-        expect(connect_four.is_win?).to eql(true)
+        4.times {(connect_four.place_piece(0, "R"))}
+        expect(connect_four.is_win?).to eql("R")
       end
 
       it "recognizes a positive slope win" do 
         connect_four = ConnectFour.new
-        connect_four.place_piece('R',0)
-        connect_four.place_piece('B',1)
-        connect_four.place_piece('R',1)
-        2.times {connect_four.place_piece('B',2)}
-        connect_four.place_piece('R',2)
-        3.times {connect_four.place_piece('B',3)}
-        connect_four.place_piece('R',3)
+        connect_four.place_piece(0, "R")
+        connect_four.place_piece(1, "B")
+        connect_four.place_piece(1, "R")
+        2.times {connect_four.place_piece(2, "B")}
+        connect_four.place_piece(2, "R")
+        3.times {connect_four.place_piece(3, "B")}
+        connect_four.place_piece(3, "R")
         expect(connect_four.is_win?).to eql(true)
       end
 
       it "recognizes a negative slope win" do
         connect_four = ConnectFour.new
-        connect_four.place_piece('R',3)
-        connect_four.place_piece('B',2)
-        connect_four.place_piece('R',2)
-        2.times {connect_four.place_piece('B',1)}
-        connect_four.place_piece('R',1)
-        3.times {connect_four.place_piece('B',0)}
-        connect_four.place_piece('R',0)
+        connect_four.place_piece(3, "R")
+        connect_four.place_piece(2, "B")
+        connect_four.place_piece(2, "R")
+        2.times {connect_four.place_piece(1, "B")}
+        connect_four.place_piece(1, "R")
+        3.times {connect_four.place_piece(0, "B")}
+        connect_four.place_piece(0, "R")
         expect(connect_four.is_win?).to eql(true)
+      end
+      it "doesnt give a false positive" do 
+        connect_four = ConnectFour.new
+        expect(connect_four.is_win?).to eql(false)
       end
     end
   end

@@ -17,7 +17,7 @@ class ConnectFour
   end
 
   def column_available?(x)
-    puts "checking if this column has an e avail #{@grid[x]}"
+    # puts "checking if this column has an e avail #{@grid[x]}"
     return @grid[x].include?("E")
   end 
 
@@ -33,16 +33,32 @@ class ConnectFour
     end
   end
 
-  # def find_first_free(x)
-  #   #return the y index of the first free space in the column x 
-  #   return false unless column_available?(x)
-
-
-
-  # end
+  def is_win?
+    winner = false
+    @grid.each do |row|
+      #check horizontal winners
+      winner = "R" if row.join.include?("RRRR")
+      winner = "B" if row.join.include?("BBBB")
+    end
+    7.times do |i|
+      col = []
+      6.times do |j|
+        col << @grid[j][i]
+      end
+      winner = "R" if col.join.include?("RRRR");
+      winner = "B" if col.join.include?("BBBB");
+    end
+    return winner
+  end
 
   def print_grid
-    print @grid
+    @grid.each do |row|
+      p row
+    end
+  end
+
+  def output_space(x, y)
+    return @grid[x][y]
   end
 
 end

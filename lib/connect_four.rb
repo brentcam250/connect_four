@@ -17,7 +17,7 @@ class ConnectFour
   end
 
   def column_available?(x)
-    # puts "checking if this column has an e avail #{@grid[x]}"
+    # puts "checking if this column has an 'E' avail #{@grid[x]}"
     return @grid[x].include?("E")
   end 
 
@@ -45,9 +45,15 @@ class ConnectFour
       6.times do |j|
         col << @grid[j][i]
       end
+      #check vertical winners
       winner = "R" if col.join.include?("RRRR");
       winner = "B" if col.join.include?("BBBB");
     end
+
+    # @grid.each_with_index do |row, row_index|
+    #   row.each_with_index do |cell, column_index|
+    #     if
+
     return winner
   end
 
@@ -61,21 +67,25 @@ class ConnectFour
     return @grid[x][y]
   end
 
+  def play_game
+    i = 0
+    until(is_win?)
+      print_grid
+      puts "player #{i%2 == 0 ? "R": "B"} turn which column do you want to place your piece in? 0-6"
+      column = gets.chomp.to_i
+      until(0..6).include?(column)
+        puts "please choose a number from 0-6"
+        column = gets.chomp.to_i
+      end
+      i % 2 ==0 ? place_piece(column, "R") : place_piece(column, "B")
+      i += 1
+    end
+    puts "winner is: #{is_win?}"
+  end
+
 end
 
 
-
-# class ConnectFourColumn
-#   attr_reader :x_position
-#   attr_accessor :column
-#   def initialize(x_position)
-#     #initialize a column full of "E", let it know which x position its in.
-#     @column = Array.new(7, "E")
-#     @x_position = x_position
-#   end
-
-
-# end
 
 test = ConnectFour.new
 
@@ -84,5 +94,4 @@ test = ConnectFour.new
 
 puts test.place_piece(0,"X")
 
-
-test.print_grid
+test.play_game
